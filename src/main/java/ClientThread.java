@@ -147,13 +147,13 @@ class ClientThread extends Thread {
         if (this.user == null) {
             return "you re not logged in";
         }
-        String allFriends="";
+        StringBuilder allFriends= new StringBuilder();
         for (String user : this.user.getFriendList())
         {
-            allFriends=allFriends+user+" ";
+            allFriends.append(user).append(" ");
         }
 
-        return allFriends ;
+        return allFriends.toString();
 
     }
     private String addFriends(String substring) {
