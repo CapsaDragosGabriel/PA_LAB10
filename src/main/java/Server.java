@@ -39,7 +39,6 @@ public class Server {
                 connCount++;
                 // Execute the client's request in a new thread
                 if (running) new ClientThread(socket, this).start();
-                //System.out.println(connCount);
             }
             if (connCount == 0) {
                 System.out.println("Server stopped");
@@ -47,7 +46,6 @@ public class Server {
             }
 
         } catch (IOException e) {
-            //System.out.println(connCount);
             System.out.println("Server stopped");
         } finally {
             assert serverSocket != null;

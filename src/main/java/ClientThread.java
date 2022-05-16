@@ -94,7 +94,12 @@ class ClientThread extends Thread {
         } else if (request.length() > 7 && request.substring(0, 7).equals("friend ")) {
             return addFriends(request.substring(7));
             //return "Server recieved addFriends request from the user: " + request.substring(10);
-        } else if (request.length() >= 5 && request.substring(0, 5).equals("send ")) {
+        }
+        else if (request.length() == 7 && request.substring(0, 7).equals("friends")) {
+            return showFriends();
+            //return "Server recieved addFriends request from the user: " + request.substring(10);
+        }
+        else if (request.length() >= 5 && request.substring(0, 5).equals("send ")) {
             return send(request.substring(5));
             //return "Server recieved send request from the user: " + request.substring(5);
         } else if (request.length() == 4 && request.substring(0, 4).equals("read")) {
@@ -138,7 +143,19 @@ class ClientThread extends Thread {
         tempUser.setLogged(true);
         return "login user request";
     }
+    private String showFriends() {
+        if (this.user == null) {
+            return "you re not logged in";
+        }
+        String allFriends="";
+        for (String user : this.user.getFriendList())
+        {
+            allFriends=allFriends+user+" ";
+        }
 
+        return allFriends ;
+
+    }
     private String addFriends(String substring) {
         if (this.user == null) {
             return "you re not logged in";
