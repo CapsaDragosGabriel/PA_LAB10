@@ -24,7 +24,7 @@ class ClientThread extends Thread {
             while (this.socket != null) {
                 PrintWriter out = null;
                 try {
-                    System.out.println(this.server.connCount);
+                    // System.out.println(this.server.connCount);
                     socket.setSoTimeout(10000);
                     // Get the request from the input stream: client → server
                     BufferedReader in = new BufferedReader(
@@ -45,7 +45,8 @@ class ClientThread extends Thread {
                             if (this.user != null)
                                 logoutUser();
                             try {
-                                if (this.server.connCount==0&& !Server.isRunning()) this.server.getServerSocket().close();
+                                if (this.server.connCount == 0 && !Server.isRunning())
+                                    this.server.getServerSocket().close();
                                 socket.close(); // or use try-with-resources
                                 this.socket = null;
                             } catch (IOException e) {
@@ -69,7 +70,7 @@ class ClientThread extends Thread {
 
                         if (this.user != null)
                             logoutUser();
-                       if (server.connCount == 0) this.server.getServerSocket().close();
+                        if (server.connCount == 0) this.server.getServerSocket().close();
                         socket.close();
                         this.socket = null;
                     } catch (IOException ex) {
@@ -105,16 +106,16 @@ class ClientThread extends Thread {
 
     private String registerUser(String substring) {
         if (this.user != null) {
-            return "You are logged in with " + this.user + " and are not allowed to create other users";
+            return "You are logged in with " + this.user.getName() + " and are not allowed to create other users";
         }
         if (NetworkData.userList != null)
             for (User user : NetworkData.userList) {
                 if (user.getName().equals(substring))
-                    return "models.User already registered";
+                    return "User already registered";
             }
 
         NetworkData.userList.add(new User(substring));
-        return "models.User " + substring + " will be registered";
+        return "User " + substring + " will be registered";
     }
 
     private String loginUser(String substring) {
@@ -171,12 +172,13 @@ class ClientThread extends Thread {
         if (this.user == null) {
             return "user not logged in";
         }
-        StringBuilder allMessages = new StringBuilder();
+        //StringBuilder allMessages = new StringBuilder();
+        String allMessages = "";
         if (NetworkData.messages == null)
             return "No messages on server";
         for (Message message : NetworkData.messages) {
             if (message.getRecievers().contains(this.user.getName()))
-                allMessages.append(message).append("\n");
+                allMessages = allMessages + "Message from " + message.getSender().getName() + ": " + message.getContent() + "\\      ";
 
         }
         if (allMessages != null) {

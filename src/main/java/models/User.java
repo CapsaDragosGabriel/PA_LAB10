@@ -21,7 +21,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "models.User{" +
+        return "User{" +
                 "name='" + name + '\'' +
                 ", friendList=" + friendList +
                 ", isLogged=" + isLogged +
